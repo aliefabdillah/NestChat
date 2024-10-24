@@ -4,7 +4,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { UserService } from '../user/user.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
+import { RegisterDto } from './dto/register.dto';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class AuthService {
     return null;
   }
 
-  async register(userRegisterDto: CreateAuthDto) {
+  async register(userRegisterDto: RegisterDto) {
     const { username, password } = userRegisterDto;
 
     const existingUser = await this.userService.findOne(username);
