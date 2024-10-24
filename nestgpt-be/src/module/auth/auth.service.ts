@@ -1,5 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnprocessableEntityException,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
+import { CreateAuthDto } from './dto/create-auth.dto';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
@@ -14,5 +20,23 @@ export class AuthService {
     }
 
     return null;
+  }
+
+  async register(userRegisterDto: CreateAuthDto) {
+    const { username, password } = userRegisterDto;
+
+    const existingUser = await this.userService.findOne(username);
+    if (existingUser) {
+      throw new BadRequestException('User already registered');
+    }
+
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const newUser = await this.userService.create(username, hashedPassword);
+    if (!newUser) {
+      throw new UnprocessableEntityException();
+    }
+    return newUser;
   }
 }
