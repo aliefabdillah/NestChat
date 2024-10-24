@@ -43,4 +43,26 @@ export class ChatService {
       },
     });
   }
+
+  async fetchChatDetail(chatId: string) {
+    return this.prismaService.chat.findUnique({
+      where: { id: chatId },
+      include: {
+        participants: {
+          select: {
+            username: true,
+          },
+        },
+        messages: {
+          select: {
+            sender: {
+              select: {
+                username: true,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
 }

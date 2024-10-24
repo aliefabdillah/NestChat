@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Req,
   UseGuards,
@@ -27,5 +28,11 @@ export class ChatController {
   @UseGuards(JwtAuthGuard)
   async getChats(@Req() req) {
     return await this.chatService.fetchChats(req.user.id);
+  }
+
+  @Get('/:id')
+  @UseGuards(JwtAuthGuard)
+  async getChatDetail(@Param('id') id: string) {
+    return await this.chatService.fetchChatDetail(id);
   }
 }
