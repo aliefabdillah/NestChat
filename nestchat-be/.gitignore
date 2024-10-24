@@ -3,6 +3,9 @@
 /node_modules
 /build
 
+# Folder Upload File (set in .env file)
+/uploads
+
 # Logs
 logs
 *.log
