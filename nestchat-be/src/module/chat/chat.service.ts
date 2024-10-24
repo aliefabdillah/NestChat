@@ -95,6 +95,7 @@ export class ChatService {
       },
       include: {
         messages: {
+          orderBy: { timestamp: 'asc' },
           select: {
             content: true,
             timestamp: true,
