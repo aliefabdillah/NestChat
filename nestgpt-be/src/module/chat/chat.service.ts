@@ -28,4 +28,19 @@ export class ChatService {
       },
     });
   }
+
+  async fetchChats(userId: string) {
+    return this.prismaService.chat.findMany({
+      where: {
+        participants: {
+          some: { id: userId },
+        },
+      },
+      include: {
+        participants: {
+          select: { username: true },
+        },
+      },
+    });
+  }
 }

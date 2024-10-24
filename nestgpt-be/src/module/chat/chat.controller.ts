@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
+  Req,
   UseGuards,
   UsePipes,
   ValidationPipe,
@@ -19,5 +21,11 @@ export class ChatController {
   @UsePipes(new ValidationPipe({ forbidNonWhitelisted: true }))
   async createChat(@Body() createChatDto: CreateChatDto) {
     return await this.chatService.createChat(createChatDto);
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  async getChats(@Req() req) {
+    return await this.chatService.fetchChats(req.user.id);
   }
 }
