@@ -12,6 +12,7 @@ import {
 import { CreateChatDto } from './dto/create-chat.dto';
 import { ChatService } from './chat.service';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { MessageDto } from './dto/message.dto';
 
 @Controller('chat')
 export class ChatController {
@@ -34,5 +35,16 @@ export class ChatController {
   @UseGuards(JwtAuthGuard)
   async getChatDetail(@Param('id') id: string) {
     return await this.chatService.fetchChatDetail(id);
+  }
+
+  // send message to chat room
+  @Post('/:id/send')
+  @UseGuards(JwtAuthGuard)
+  async sendMessage(
+    @Param('id') id: string,
+    @Body() messageDto: MessageDto,
+    @Req() req,
+  ) {
+    return await this.chatService.sendMessage(id, req.user.id, messageDto);
   }
 }
