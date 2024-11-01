@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-// import { login } from '../services/api';
+import { login } from '../services/api';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');

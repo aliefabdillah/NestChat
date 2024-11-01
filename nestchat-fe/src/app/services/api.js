@@ -4,6 +4,7 @@ const API_URL = process.env.API_URL;
 
 export const login = async (username, password) => {
   try {
+    console.log(API_URL)
     const response = await axios.post(`${API_URL}/auth/login`, { username, password });
     return response.data;
   } catch (error) {
