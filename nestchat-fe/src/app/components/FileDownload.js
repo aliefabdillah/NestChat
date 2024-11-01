@@ -4,7 +4,7 @@ export default function FileDownload({ chatId, file }) {
   const handleDownload = async () => {
     try {
       const token = localStorage.getItem('token');
-      const fileData = await downloadFile(token, chatId, file._id);
+      const fileData = await downloadFile(token, chatId, file.id);
 
       const url = window.URL.createObjectURL(new Blob([fileData]));
       const link = document.createElement('a');
@@ -19,7 +19,7 @@ export default function FileDownload({ chatId, file }) {
 
   return (
     <div className="mb-2">
-      <button onClick={handleDownload} className="bg-green-500 text-white px-4 py-2 rounded">
+      <button onClick={handleDownload} className="bg-green-500 hover:bg-green-800 text-white w-full px-4 py-2 rounded whitespace-nowrap overflow-hidden text-ellipsis">
         Download {file.filename}
       </button>
     </div>
