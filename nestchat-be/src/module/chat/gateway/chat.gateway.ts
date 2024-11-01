@@ -68,5 +68,13 @@ export class ChatGateway
   ) {
     client.join(chatId);
     this.logger.log(`User ${client.id} Joined the chat ${chatId}`);
+
+    const chat = await this.chatService.fetchChatDetail(chatId);
+
+    if (!chat) {
+      throw new WsException('Chat Not Found');
+    }
+
+    this.server.to(chatId).emit('receive-message', chat);
   }
 }
