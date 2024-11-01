@@ -65,6 +65,19 @@ export const downloadFile = async (token, chatId, fileId) => {
   }
 };
 
+export const getFiles = async (token, chatId) => {
+  try {
+    const response = await axios.get(`${API_URL}/chat/${chatId}/file`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+}
+
 export const logout = () => {
   localStorage.removeItem('token');
   window.location.href = '/login'; // Redirect to login page
