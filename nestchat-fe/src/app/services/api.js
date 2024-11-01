@@ -51,6 +51,32 @@ export const uploadFile = async (token, chatId, file) => {
   }
 };
 
+export const getProfile = async (token) => {
+  try {
+    const response = await axios.get(`${API_URL}/user/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const updateProfile = async (token, userData) => {
+  try {
+    const response = await axios.put(`${API_URL}/user/me`, userData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
 export const downloadFile = async (token, chatId, fileId) => {
   try {
     const response = await axios.get(`${API_URL}/chat/${chatId}/file/${fileId}`, {
