@@ -20,3 +20,16 @@ export const register = async (username, password) => {
     throw error.response.data;
   }
 };
+
+export const getChats = async (token) => {
+  try {
+    const response = await axios.get(`${API_URL}/chat`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
