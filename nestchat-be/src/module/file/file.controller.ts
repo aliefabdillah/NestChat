@@ -49,4 +49,10 @@ export class FileController {
     }
     res.sendFile(this.fileService.getFilePath(file));
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  async getFileList(@Param('chatId') chatId: string) {
+    return this.fileService.getListFile(chatId);
+  }
 }

@@ -7,6 +7,18 @@ import { File } from './entities/file.entity';
 export class FileService {
   constructor(private prismaService: PrismaService) {}
 
+  async getListFile(chatId: string) {
+    const files = await this.prismaService.file.findMany({
+      where: { chatId: chatId },
+    });
+
+    if (!files) {
+      throw new NotFoundException(`Files not found`);
+    }
+
+    return files;
+  }
+
   async uploadFile(chatId: string, file: Express.Multer.File) {
     const chat = await this.prismaService.chat.findUnique({
       where: { id: chatId },
