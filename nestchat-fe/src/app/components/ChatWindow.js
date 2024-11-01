@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useChat from '../hooks/useChat';
+import Notification from './Notification';
 
-export default function ChatWindow({ chatId, userId }) {
-  const { messages, message, setMessage, sendMessage } = useChat(chatId);
+export default function ChatDetails({ chatId, userId }) {
+  const [notification, setNotification] = useState(null);
+  const { messages, message, setMessage, sendMessage } = useChat(chatId, setNotification);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
@@ -34,6 +36,7 @@ export default function ChatWindow({ chatId, userId }) {
           </button>
         </form>
       </div>
+      <Notification message={notification} />
     </div>
   );
 }
