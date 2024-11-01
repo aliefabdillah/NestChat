@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import useChat from '../hooks/useChat';
 import Notification from './Notification';
+import FileUpload from './FileUpload';
+import FileDownload from './FileDownload';
 
 export default function ChatDetails({ chatId, userId }) {
   const [notification, setNotification] = useState(null);
   const { messages, message, setMessage, sendMessage } = useChat(chatId, setNotification);
-
+  const [files, setFiles] = useState([]);
+  
   const handleSendMessage = (e) => {
     e.preventDefault();
     sendMessage(userId, message);
@@ -35,6 +38,12 @@ export default function ChatDetails({ chatId, userId }) {
             Send
           </button>
         </form>
+        <FileUpload chatId={chatId} />
+        <div className="mt-4">
+          {files.map(file => (
+            <FileDownload key={file._id} chatId={chatId} file={file} />
+          ))}
+        </div>
       </div>
       <Notification message={notification} />
     </div>
