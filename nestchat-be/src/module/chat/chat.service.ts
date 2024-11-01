@@ -60,6 +60,8 @@ export class ChatService {
         },
         messages: {
           select: {
+            content: true,
+            timestamp: true,
             sender: {
               select: {
                 username: true,
