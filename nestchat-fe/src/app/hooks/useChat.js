@@ -10,9 +10,11 @@ const useChat = (chatId, onNewMessage) => {
     const newSocket = io(process.env.SOCKET_URL);
     setSocket(newSocket);
 
-    newSocket.emit('joinChat', chatId);
+    newSocket.emit('join-chat', {
+      id: chatId
+    });
 
-    newSocket.on('receiveMessage', (newChat) => {
+    newSocket.on('receive-message', (newChat) => {
       setMessages(newChat.messages);
       if (onNewMessage) {
         const newMessage = newChat.messages[newChat.messages.length - 1];
@@ -23,8 +25,8 @@ const useChat = (chatId, onNewMessage) => {
     return () => newSocket.close();
   }, [chatId]);
 
-  const sendMessage = (userId, content) => {
-    socket.emit('sendMessage', { chatId, userId, content });
+  const sendMessage = (senderId, content) => {
+    socket.emit('send-message', { chatId, senderId, content });
     setMessage('');
   };
 
