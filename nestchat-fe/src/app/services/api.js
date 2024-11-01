@@ -33,3 +33,39 @@ export const getChats = async (token) => {
     throw error.response.data;
   }
 };
+
+export const uploadFile = async (token, chatId, file) => {
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await axios.post(`${API_URL}/chat/${chatId}/file`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const downloadFile = async (token, chatId, fileId) => {
+  try {
+    const response = await axios.get(`${API_URL}/chat/${chatId}/file/${fileId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      responseType: 'blob',
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const logout = () => {
+  localStorage.removeItem('token');
+  window.location.href = '/login'; // Redirect to login page
+};
